@@ -61,7 +61,6 @@ const getAllUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const userId = req.params.id
-    console.log(userId)
     const returnData = await userDB.deleteUser(userId)
     .then((res) => {
         return {
