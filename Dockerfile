@@ -1,9 +1,9 @@
-#!/bin/bash
-FROM node:alpine
+#!/bin/sh
+FROM --platform=linux/amd64 node:alpine
 
-WORKDIR /usr/app
+WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install
 
