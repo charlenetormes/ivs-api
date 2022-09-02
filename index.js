@@ -1,11 +1,12 @@
 const express = require('express')
+const userRoutes = require('./routes/users.routes')
 const app = express()
-
-app.get('/', (req,res) => {
-    res.send("Hello World")
-})
-
 const port = process.env.PORT || 3000
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+app.use(userRoutes)
 
 app.listen(port, () => {
     console.log(`Server is listening to port ${port}`)
