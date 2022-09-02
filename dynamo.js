@@ -8,6 +8,8 @@ AWS.config.update({
     secretAccessKey: process.env.AWS_AKIA43Z57JT2QSZYV4O6
 })
 
+console.log("test")
+
 const dynamoClient = new AWS.DynamoDB.DocumentClient()
 const TABLE_NAME = "ivs-users"
 
