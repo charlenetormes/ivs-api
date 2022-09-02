@@ -2,7 +2,7 @@ const express = require('express')
 const userRoutes = require('./routes/users.routes')
 const auth = require('./middleware/auth');
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
