@@ -25,7 +25,7 @@ const getUserByID = async (req, res) => {
     const returnData = await userDB.getUserByID(userId)
     .then((res) => {
         return {
-            code: 404,
+            code: 200,
             message: "Success",
             data: res
         }
@@ -47,6 +47,26 @@ const getAllUsers = async (req, res) => {
             code: 200,
             message: "Success",
             data: res
+        }
+    })
+    .catch((e) => {
+        return {
+            code: 400,
+            message: "Bad Request - Error getting Users"
+        }  
+    })
+
+    res.status(returnData.code).send(returnData)
+}
+
+const getAllUsersName = async (req, res) => {
+    const returnData = await userDB.getUsers()
+    .then((res) => {
+        const formattedName = res.Items.map((data) => data.name)
+        return {
+            code: 200,
+            message: "Success",
+            data: formattedName
         }
     })
     .catch((e) => {
@@ -83,5 +103,6 @@ module.exports = {
     addUserController,
     getUserByID,
     getAllUsers,
+    getAllUsersName,
     deleteUser
 }
