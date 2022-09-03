@@ -1,7 +1,14 @@
 const userDB = require('../store/users')
 
 const addUserController = async (req , res) => {
-    const user = req.body
+    const user = req.body ?? null
+    if(Object.keys(user).length === 0 || !user.email || !user.name){
+        return res.status(400).send({
+            code: 400,
+            message: "Bad Request - Missing Payload"
+        } )
+    }
+
     const returnData = await userDB.addOrUpdateUser(user)
     .then((res) => {
         return {
@@ -13,11 +20,11 @@ const addUserController = async (req , res) => {
     .catch((e) => {
         return {
             code: 400,
-            message: "Bad Request - Error creating User"
+            message: e.message
         }   
     })
 
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
 }
 
 const getUserByID = async (req, res) => { 
@@ -76,7 +83,7 @@ const getAllUsersName = async (req, res) => {
         }  
     })
 
-    res.status(returnData.code).send(returnData)
+    return res.status(returnData.code).send(returnData)
 }
 
 const deleteUser = async (req, res) => {
@@ -95,7 +102,7 @@ const deleteUser = async (req, res) => {
         }
     })
 
-    res.status(returnData.code).send(returnData)
+    return res.status(returnData.code).send(returnData)
     
 }
 
