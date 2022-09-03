@@ -4,10 +4,33 @@ const userRoutes = require('./routes/users.routes')
 const auth = require('./middleware/auth');
 const app = express()
 const port = process.env.PORT || 3000
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
+const options = {
+    definition:{
+        openapi: "3.0.0",
+        info: {
+            title: "Users API",
+            version: "1.0.0",
+            description: "A simple NodeJS/ExpressJS Users API"
+        },
+        servers: [
+            {
+                url: "http://localhost:3000"
+            }
+        ],
+        
+    },
+    apis: ["./routes/*.js"]
+}
+
+const specs = swaggerJsDoc(options)
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
